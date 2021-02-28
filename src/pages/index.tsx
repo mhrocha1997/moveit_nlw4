@@ -6,10 +6,13 @@ import { ChallengeBox } from "../components/ChallengeBox";
 
 import Head from 'next/head';
 import {GetServerSideProps} from 'next';
+import Switch from 'react-switch';
 
 import styles from '../styles/pages/Home.module.css';
 import { CountdownProvider } from "../contexts/CountdownContext";
 import { ChallengesProvider } from "../contexts/ChallengesContext";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { useState } from "react";
 
 interface HomeProps{
   level: number;
@@ -19,6 +22,12 @@ interface HomeProps{
 
 export default function Home(props: HomeProps) {
   
+  const [ theme, setTheme] = useState('default');
+
+  function toggleTheme(){
+    setTheme('dracula');
+  }
+
   return (
     <ChallengesProvider 
       level={props.level} 
@@ -29,8 +38,8 @@ export default function Home(props: HomeProps) {
         <Head>
           <title>Início | move.it</title>
         </Head>
-
         <ExperienceBar />
+        <Switch checked={theme === 'default'} onChange={toggleTheme}/>
         <CountdownProvider>
           <section>
             <div>
